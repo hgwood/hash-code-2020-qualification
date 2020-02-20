@@ -5,7 +5,32 @@ const { parse } = require("./read");
 
 describe("parse", function() {
   it("parses correctly", function() {
-    const textFromInputFile = ``;
-    assert.deepEqual(parse(textFromInputFile), {});
+    const textFromInputFile = `
+    6 2 7
+1 2 3 6 5 4
+5 2 2
+0 1 2 3 4
+4 3 1
+3 2 5 0 `;
+    assert.deepEqual(parse(textFromInputFile), {
+      nbooks: 6,
+      nlibraries: 2,
+      ndays: 7,
+      scores: [1, 2, 3, 6, 5, 4],
+      libraries: [
+        {
+          nbooks: 5,
+          signupDuration: 2,
+          shipCapacity: 2,
+          books: [0, 1, 2, 3, 4]
+        },
+        {
+          nbooks: 4,
+          signupDuration: 3,
+          shipCapacity: 1,
+          books: [3, 2, 5, 0]
+        }
+      ]
+    });
   });
 });
