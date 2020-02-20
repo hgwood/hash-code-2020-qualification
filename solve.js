@@ -24,7 +24,12 @@ function solve(problem, file) {
     return solveD(problem);
   }
 
-  const { libraries, ndays } = problem;
+  let { libraries, ndays } = problem;
+
+  if (file.startsWith("e")) {
+    libraries = libraries.filter(library => library.shipCapacity > 1);
+  }
+
   const alreadySentBooks = new Set();
   /* const cutLibrairies = _.takeWhile(
     libraries.sort(libraryComparatorByRating(problem)),
