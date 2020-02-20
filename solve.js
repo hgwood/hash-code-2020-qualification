@@ -26,9 +26,9 @@ function solve(problem, file) {
 
   let { libraries, ndays } = problem;
 
-  if (file.startsWith("e")) {
-    libraries = libraries.filter(library => library.shipCapacity > 1);
-  }
+  // if (file.startsWith("e")) {
+  //   libraries = libraries.filter(library => library.shipCapacity > 1);
+  // }
 
   const alreadySentBooks = new Set();
   /* const cutLibrairies = _.takeWhile(
@@ -39,7 +39,9 @@ function solve(problem, file) {
     }
   );*/
 
-  const filterLibraries = libraries.sort(libraryComparatorByRating(problem));
+  const filterLibraries = libraries.sort(
+    libraryComparatorByRating(problem, file)
+  );
 
   const result = filterLibraries
     .map(library => {
@@ -60,18 +62,21 @@ function solve(problem, file) {
   return result;
 }
 
-const libraryComparatorByRating = problem => (lib1, lib2) => {
+const libraryComparatorByRating = (problem, file) => (lib1, lib2) => {
   return (
-    ourRatingOfLibrary(problem, lib2.index) -
-    ourRatingOfLibrary(problem, lib1.index)
+    ourRatingOfLibrary(problem, lib2.index, file) -
+    ourRatingOfLibrary(problem, lib1.index, file)
   );
 };
 
-function ourRatingOfLibrary(problem, id) {
+function ourRatingOfLibrary(problem, id, file) {
   const bookScoreBySignupDuration =
     totalScoreOfBooksInLibrary(problem, id) /
     problem.libraries[id].signupDuration;
-  const result = bookScoreBySignupDuration;
+  let result = bookScoreBySignupDuration;
+  if (file.startsWith("e")) {
+    result = result * problem.libraries[id].shipCapacity;
+  }
   assert(
     Number.isFinite(bookScoreBySignupDuration),
     `'${bookScoreBySignupDuration}' is not finite`
