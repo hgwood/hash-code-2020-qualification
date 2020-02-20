@@ -23,7 +23,9 @@ function solve(problem, file) {
 
   const result = libraries.map((library, i) => ({
     id: i,
-    books: library.books
+    books: library.books.sort(
+      (book1, book2) => problem.scores[book1] - problem.scores[book2]
+    )
   }));
   return result;
 }
