@@ -47,10 +47,19 @@ const libraryComparator = problem => (lib1, lib2) => {
 };
 
 function ourRatingOfLibrary(problem, id) {
-  const result =
+  const bookScoreBySignupDuration =
     totalScoreOfBooksInLibrary(problem, id) /
     problem.libraries[id].signupDuration;
+  const shipCapacity = problem.libraries[id].shipCapacity;
+  const result = (bookScoreBySignupDuration * 0.8 + shipCapacity * 0.2) / 2;
+  assert(
+    Number.isFinite(bookScoreBySignupDuration),
+    `'${bookScoreBySignupDuration}' is not finite`
+  );
+  assert(Number.isFinite(shipCapacity), `'${shipCapacity}' is not finite`);
+
   assert(Number.isFinite(result), `'${result}' is not finite`);
+
   return result;
 }
 

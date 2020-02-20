@@ -3,7 +3,18 @@ const debug = require("debug")("pg-load");
 const { Client } = require("pg");
 
 const insertDataSet = async (client, dataSet, dataSetName) => {
-  // insert the data set in the db here
+  const query = `
+  drop table libraries if exists;
+  create table libraries (id bigint, signupDuration int);
+  create table books (id bigint, score int);
+  insert into libraries (id, signupDuration) values ${dataSet.libraries
+    .map(({ index, signupDuration }) => `(${index}, ${signupDuration})`)
+    .join(" ")}
+  insert into books (id, score) values ${dataSet.scores
+    .map((score, i) => `(${i}, ${score})`)
+    .join(" ")}
+    `;
+  await client.query(query);
 };
 
 const main = async files => {
@@ -30,7 +41,7 @@ const main = async files => {
       await client.query(`create database ${database}`);
       debug(dataSetName, "database created");
       const dataSetClient = new Client({
-        connectionString: `postgres://postgres@localhost:5432/${database}`
+        connectionString: `postgres://postgres:postgres@localhost:5432/${database}`
       });
       await dataSetClient.connect();
       await dataSetClient.query("begin");
