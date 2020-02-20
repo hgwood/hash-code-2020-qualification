@@ -51,7 +51,7 @@ function ourRatingOfLibrary(problem, id) {
     totalScoreOfBooksInLibrary(problem, id) /
     problem.libraries[id].signupDuration;
   const shipCapacity = problem.libraries[id].shipCapacity;
-  const result = (bookScoreBySignupDuration * 0.8 + shipCapacity * 0.2) / 2;
+  const result = (bookScoreBySignupDuration * 0.7 + shipCapacity * 0.3) / 2;
   assert(
     Number.isFinite(bookScoreBySignupDuration),
     `'${bookScoreBySignupDuration}' is not finite`
