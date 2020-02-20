@@ -1,6 +1,7 @@
 const debug = require("debug")("solve");
 const _ = require("lodash");
 const gridUtils = require("./grid-utils");
+const assert = require("assert");
 
 const test = {
   nbooks: 6,
@@ -46,16 +47,19 @@ const libraryComparator = problem => (lib1, lib2) => {
 };
 
 function ourRatingOfLibrary(problem, id) {
-  return (
+  const result =
     totalScoreOfBooksInLibrary(problem, id) /
-    problem.libraries[id].signupDuration
-  );
+    problem.libraries[id].signupDuration;
+  assert(Number.isFinite(result), `'${result}' is not finite`);
+  return result;
 }
 
 function totalScoreOfBooksInLibrary(problem, id) {
-  return problem.libraries[id].books
+  const result = problem.libraries[id].books
     .map(book => problem.scores[book])
     .reduce((a, b) => a + b, 0);
+  assert(Number.isSafeInteger(result), `'${result}' is not a safe integer`);
+  return result;
 }
 
 module.exports = solve;
