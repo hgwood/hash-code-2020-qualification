@@ -23,11 +23,7 @@ function solve(problem, file) {
   const alreadySentBooks = new Set();
 
   const result = libraries
-    .sort(
-      (lib1, lib2) =>
-        ourRatingOfLibrary(problem, lib2.index) -
-        ourRatingOfLibrary(problem, lib1.index)
-    )
+    .sort(libraryComparator(problem))
     .map(library => {
       const sending = library.books
         .filter(book => !alreadySentBooks.has(book))
@@ -42,8 +38,18 @@ function solve(problem, file) {
   return result;
 }
 
+const libraryComparator = problem => (lib1, lib2) => {
+  return (
+    ourRatingOfLibrary(problem, lib2.index) -
+    ourRatingOfLibrary(problem, lib1.index)
+  );
+};
+
 function ourRatingOfLibrary(problem, id) {
-  return totalScoreOfBooksInLibrary / problem.libraries[id].signupDuration;
+  return (
+    totalScoreOfBooksInLibrary(problem, id) /
+    problem.libraries[id].signupDuration
+  );
 }
 
 function totalScoreOfBooksInLibrary(problem, id) {
