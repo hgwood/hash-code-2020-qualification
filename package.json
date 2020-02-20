@@ -14,7 +14,7 @@
     "zip": "cross-env DEBUG=* node -r dotenv/config ./zip",
     "scaffold": "node scaffold",
     "submit": "npm run zip && npm run upload",
-    "pg:run": "docker container run --name postgres_hash_code -d -p 5432:5432 postgres",
+    "pg:run": "docker container run -e POSTGRES_PASSWORD=postgres --name postgres_hash_code -d -p 5432:5432 postgres",
     "pg:psql": "docker container exec -it postgres_hash_code psql -U postgres",
     "pg:stop": "docker container stop postgres_hash_code",
     "pg:rm": "docker container rm postgres_hash_code",
