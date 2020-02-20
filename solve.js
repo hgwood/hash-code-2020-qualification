@@ -27,7 +27,7 @@ function solve(problem, file) {
   const { libraries, ndays } = problem;
   const alreadySentBooks = new Set();
   let daysLibrariesCumulated = 0;
-  const filteredLibrairies = _.takeWhile(
+  const cutLibrairies = _.takeWhile(
     libraries.sort(libraryComparatorByRating(problem)),
     lib => {
       daysLibrariesCumulated += lib.signupDuration;
@@ -35,7 +35,9 @@ function solve(problem, file) {
     }
   );
 
-  const result = filteredLibrairies
+  const filterLibraries = libraries.sort(libraryComparatorByRating(problem));
+
+  const result = filterLibraries
     .sort(libraryComparatorByShipCapacity(problem))
     .map(library => {
       const sending = library.books
@@ -60,7 +62,7 @@ const libraryComparatorByRating = problem => (lib1, lib2) => {
 
 function ourRatingOfLibrary(problem, id) {
   const bookScoreBySignupDuration =
-    totalScoreOfBooksInLibrary(problem, id) /
+    (totalScoreOfBooksInLibrary(problem, id) * 0.5) /
     problem.libraries[id].signupDuration;
   const shipCapacity = problem.libraries[id].shipCapacity;
   const result = bookScoreBySignupDuration;
