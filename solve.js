@@ -26,14 +26,13 @@ function solve(problem, file) {
 
   const { libraries, ndays } = problem;
   const alreadySentBooks = new Set();
-  let daysLibrariesCumulated = 0;
-  const cutLibrairies = _.takeWhile(
+  /* const cutLibrairies = _.takeWhile(
     libraries.sort(libraryComparatorByRating(problem)),
     lib => {
       daysLibrariesCumulated += lib.signupDuration;
       return daysLibrariesCumulated < ndays * 0.9;
     }
-  );
+  );*/
 
   const filterLibraries = libraries.sort(libraryComparatorByRating(problem));
 
@@ -83,17 +82,6 @@ function totalScoreOfBooksInLibrary(problem, id) {
     .reduce((a, b) => a + b, 0);
   assert(Number.isSafeInteger(result), `'${result}' is not a safe integer`);
   return result;
-}
-
-function solveB(problem) {
-  return problem.libraries
-    .sort((lib1, lib2) => lib1.signupDuration - lib2.signupDuration)
-    .map(library => {
-      return {
-        id: library.index,
-        books: library.books
-      };
-    });
 }
 
 module.exports = solve;
