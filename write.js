@@ -11,6 +11,14 @@ function writeLines(path, lines) {
   debug(`wrote ${lines.length} lines to ${path}`);
 }
 
-const unparse = _.constant([]);
+const unparse = solution => {
+  return [
+    solution.length,
+    ...solution.flatMap(library => [
+      `${library.id} ${library.books.length}`,
+      library.books.join(" ")
+    ])
+  ];
+};
 
 module.exports.unparse = unparse;
