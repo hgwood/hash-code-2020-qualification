@@ -23,6 +23,7 @@ function solve(problem, file) {
   const alreadySentBooks = new Set();
 
   const result = libraries
+    .sort((lib1, lib2) => lib1.signupDuration - lib2.signupDuration)
     .map((library, i) => {
       const sending = library.books
         .filter(book => !alreadySentBooks.has(book))
