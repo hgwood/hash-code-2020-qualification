@@ -20,9 +20,9 @@ const exampleOutput = [
 ];
 
 function solve(problem, file) {
-  /*if (file.startsWith("b")) {
-    return solveB(problem);
-  }*/
+  if (file.startsWith("d")) {
+    return solveD(problem);
+  }
 
   const { libraries, ndays } = problem;
   const alreadySentBooks = new Set();
@@ -82,6 +82,32 @@ function totalScoreOfBooksInLibrary(problem, id) {
     .reduce((a, b) => a + b, 0);
   assert(Number.isSafeInteger(result), `'${result}' is not a safe integer`);
   return result;
+}
+
+function solveD(problem) {
+  const libraries = [...problem.libraries].sort(
+    (lib1, lib2) => lib2.books.length - lib1.books.length
+  );
+  const solution = [];
+
+  libraries.forEach((library, i) => {
+    if (
+      (library.index % 2 === 0 && solution.includes(library.index + 1)) ||
+      (library.index % 2 === 1 && solution.includes(library.index - 1))
+    ) {
+      const next = libraries[i + 1];
+      if (next && next.books.length > library.books.length) {
+        solution.push(next.index);
+      }
+    } else {
+      solution.push(library.index);
+    }
+  });
+
+  return solution.map(libi => ({
+    id: libi,
+    books: problem.libraries[libi].books
+  }));
 }
 
 module.exports = solve;
