@@ -88,15 +88,14 @@ function totalScoreOfBooksInLibrary(problem, id) {
 }
 
 function solveB(problem) {
-  const bestLibrary = problem.libraries.sort(
-    (lib1, lib2) => lib2.signupDuration - lib1.signupDuration
-  )[0];
-  return [
-    {
-      id: bestLibrary.index,
-      books: bestLibrary.books
-    }
-  ];
+  return problem.libraries
+    .sort((lib1, lib2) => lib1.signupDuration - lib2.signupDuration)
+    .map(library => {
+      return {
+        id: library.index,
+        books: library.books
+      };
+    });
 }
 
 module.exports = solve;
