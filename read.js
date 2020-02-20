@@ -2,7 +2,7 @@ const _ = require("lodash/fp");
 const assert = require("assert");
 const debug = require("debug")("read");
 const fs = require("fs");
-const jolicitron = require("./jolicitron");
+const jolicitron = require("./jolicitron").default;
 
 module.exports = function read(filePath) {
   const cachedFile = `${filePath.split(".")[0]}.in.json`;
