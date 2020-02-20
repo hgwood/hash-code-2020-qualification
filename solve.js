@@ -27,7 +27,7 @@ function solve(problem, file) {
     libraries.sort(libraryComparatorByRating(problem)),
     lib => {
       daysLibrariesCumulated += lib.signupDuration;
-      return daysLibrariesCumulated < ndays * 1.1;
+      return daysLibrariesCumulated < ndays * 1;
     }
   );
 
@@ -98,6 +98,12 @@ function totalScoreOfBooksInLibrary(problem, id) {
     .reduce((a, b) => a + b, 0);
   assert(Number.isSafeInteger(result), `'${result}' is not a safe integer`);
   return result;
+}
+
+function solveB(problem) {
+  return problem.libraries.sort(
+    (lib1, lib2) => lib1.signupDuration - lib2.signupDuration
+  );
 }
 
 module.exports = solve;
