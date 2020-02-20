@@ -62,7 +62,7 @@ const libraryComparatorByRating = problem => (lib1, lib2) => {
 
 function ourRatingOfLibrary(problem, id) {
   const bookScoreBySignupDuration =
-    (totalScoreOfBooksInLibrary(problem, id) * 0.5) /
+    (totalScoreOfBooksInLibrary(problem, id) * 0.9) /
     problem.libraries[id].signupDuration;
   const shipCapacity = problem.libraries[id].shipCapacity;
   const result = bookScoreBySignupDuration;
