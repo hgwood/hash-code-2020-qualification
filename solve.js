@@ -27,7 +27,7 @@ function solve(problem, file) {
     libraries.sort(libraryComparatorByRating(problem)),
     lib => {
       daysLibrariesCumulated += lib.signupDuration;
-      return daysLibrariesCumulated < ndays * 1.2;
+      return daysLibrariesCumulated < ndays * 1.1;
     }
   );
 
