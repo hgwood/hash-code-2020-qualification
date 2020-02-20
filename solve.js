@@ -20,13 +20,18 @@ const exampleOutput = [
 
 function solve(problem, file) {
   const { libraries, ndays } = problem;
+  const alreadySentBooks = new Set();
 
-  const result = libraries.map((library, i) => ({
-    id: i,
-    books: library.books.sort(
-      (book1, book2) => problem.scores[book2] - problem.scores[book1]
-    )
-  }));
+  const result = libraries.map((library, i) => {
+    const sending = library.books
+      .filter(book => !alreadySentBooks.has(book))
+      .sort((book1, book2) => problem.scores[book2] - problem.scores[book1]);
+    sending.forEach(book => alreadySentBooks.add(book));
+    return {
+      id: i,
+      books: sending
+    };
+  });
   return result;
 }
 
