@@ -22,9 +22,17 @@ const exampleOutput = [
 function solve(problem, file) {
   const { libraries, ndays } = problem;
   const alreadySentBooks = new Set();
+  let daysLibrariesCumulated = 0;
+  const filteredLibrairies = _.takeWhile(
+    libraries.sort(libraryComparatorByRating(problem)),
+    lib => {
+      daysLibrariesCumulated += lib.signupDuration;
+      return daysLibrariesCumulated < ndays * 1.5;
+    }
+  );
 
-  const result = libraries
-    .sort(libraryComparator(problem))
+  const result = filteredLibrairies
+    .sort(libraryComparatorByShipCapacity(problem))
     .map(library => {
       const sending = library.books
         .filter(book => !alreadySentBooks.has(book))
@@ -39,7 +47,7 @@ function solve(problem, file) {
   return result;
 }
 
-const libraryComparator = problem => (lib1, lib2) => {
+const libraryComparatorByRating = problem => (lib1, lib2) => {
   return (
     ourRatingOfLibrary(problem, lib2.index) -
     ourRatingOfLibrary(problem, lib1.index)
@@ -51,7 +59,28 @@ function ourRatingOfLibrary(problem, id) {
     totalScoreOfBooksInLibrary(problem, id) /
     problem.libraries[id].signupDuration;
   const shipCapacity = problem.libraries[id].shipCapacity;
-  const result = (bookScoreBySignupDuration * 0.9 + shipCapacity * 0.1) / 2;
+  const result = bookScoreBySignupDuration;
+  assert(
+    Number.isFinite(bookScoreBySignupDuration),
+    `'${bookScoreBySignupDuration}' is not finite`
+  );
+  assert(Number.isFinite(shipCapacity), `'${shipCapacity}' is not finite`);
+
+  assert(Number.isFinite(result), `'${result}' is not finite`);
+
+  return result;
+}
+
+const libraryComparatorByShipCapacity = problem => (lib1, lib2) => {
+  return lib2.shipCapacity - lib1.shipCapacity;
+};
+
+function ourRatingOfLibrary(problem, id) {
+  const bookScoreBySignupDuration =
+    totalScoreOfBooksInLibrary(problem, id) /
+    problem.libraries[id].signupDuration;
+  const shipCapacity = problem.libraries[id].shipCapacity;
+  const result = bookScoreBySignupDuration;
   assert(
     Number.isFinite(bookScoreBySignupDuration),
     `'${bookScoreBySignupDuration}' is not finite`
