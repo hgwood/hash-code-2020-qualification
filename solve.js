@@ -23,14 +23,14 @@ function solve(problem, file) {
   const alreadySentBooks = new Set();
 
   const result = libraries
-    // .sort((lib1, lib2) => lib2.signupDuration - lib1.signupDuration)
-    .map((library, i) => {
+    .sort((lib1, lib2) => lib1.signupDuration - lib2.signupDuration)
+    .map(library => {
       const sending = library.books
         .filter(book => !alreadySentBooks.has(book))
         .sort((book1, book2) => problem.scores[book2] - problem.scores[book1]);
       sending.forEach(book => alreadySentBooks.add(book));
       return {
-        id: i,
+        id: library.index,
         books: sending
       };
     })

@@ -35,7 +35,7 @@ const parse = inputText => {
     n("scores", { length: "nbooks" }),
     n(
       "libraries",
-      { length: "nlibraries" },
+      { length: "nlibraries", indices: true },
       save("nbooks"),
       "signupDuration",
       "shipCapacity",
