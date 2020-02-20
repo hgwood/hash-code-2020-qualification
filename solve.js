@@ -20,6 +20,12 @@ const exampleOutput = [
 ];
 
 function solve(problem, file) {
+  console.log(file);
+  if (file.startsWith("b")) {
+    console.log("go B");
+    return solveB(problem);
+  }
+
   const { libraries, ndays } = problem;
   const alreadySentBooks = new Set();
   let daysLibrariesCumulated = 0;
@@ -101,9 +107,15 @@ function totalScoreOfBooksInLibrary(problem, id) {
 }
 
 function solveB(problem) {
-  return problem.libraries.sort(
+  const bestLibrary = problem.libraries.sort(
     (lib1, lib2) => lib1.signupDuration - lib2.signupDuration
-  );
+  )[0];
+  return [
+    {
+      id: bestLibrary.index,
+      books: bestLibrary.books
+    }
+  ];
 }
 
 module.exports = solve;
