@@ -20,9 +20,7 @@ const exampleOutput = [
 ];
 
 function solve(problem, file) {
-  console.log(file);
   if (file.startsWith("b")) {
-    console.log("go B");
     return solveB(problem);
   }
 
@@ -81,23 +79,6 @@ const libraryComparatorByShipCapacity = problem => (lib1, lib2) => {
   return lib2.shipCapacity - lib1.shipCapacity;
 };
 
-function ourRatingOfLibrary(problem, id) {
-  const bookScoreBySignupDuration =
-    totalScoreOfBooksInLibrary(problem, id) /
-    problem.libraries[id].signupDuration;
-  const shipCapacity = problem.libraries[id].shipCapacity;
-  const result = bookScoreBySignupDuration;
-  assert(
-    Number.isFinite(bookScoreBySignupDuration),
-    `'${bookScoreBySignupDuration}' is not finite`
-  );
-  assert(Number.isFinite(shipCapacity), `'${shipCapacity}' is not finite`);
-
-  assert(Number.isFinite(result), `'${result}' is not finite`);
-
-  return result;
-}
-
 function totalScoreOfBooksInLibrary(problem, id) {
   const result = problem.libraries[id].books
     .map(book => problem.scores[book])
@@ -108,7 +89,7 @@ function totalScoreOfBooksInLibrary(problem, id) {
 
 function solveB(problem) {
   const bestLibrary = problem.libraries.sort(
-    (lib1, lib2) => lib1.signupDuration - lib2.signupDuration
+    (lib1, lib2) => lib2.signupDuration - lib1.signupDuration
   )[0];
   return [
     {
