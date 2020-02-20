@@ -20,9 +20,9 @@ const exampleOutput = [
 ];
 
 function solve(problem, file) {
-  if (file.startsWith("b")) {
+  /*if (file.startsWith("b")) {
     return solveB(problem);
-  }
+  }*/
 
   const { libraries, ndays } = problem;
   const alreadySentBooks = new Set();
@@ -31,7 +31,7 @@ function solve(problem, file) {
     libraries.sort(libraryComparatorByRating(problem)),
     lib => {
       daysLibrariesCumulated += lib.signupDuration;
-      return daysLibrariesCumulated < ndays * 1;
+      return daysLibrariesCumulated < ndays * 0.9;
     }
   );
 
