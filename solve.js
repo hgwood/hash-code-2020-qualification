@@ -38,7 +38,6 @@ function solve(problem, file) {
   const filterLibraries = libraries.sort(libraryComparatorByRating(problem));
 
   const result = filterLibraries
-    .sort(libraryComparatorByShipCapacity(problem))
     .map(library => {
       const sending = library.books
         .filter(book => !alreadySentBooks.has(book))
