@@ -74,9 +74,7 @@ function ourRatingOfLibrary(problem, id, file) {
     totalScoreOfBooksInLibrary(problem, id) /
     problem.libraries[id].signupDuration;
   let result = bookScoreBySignupDuration;
-  if (file.startsWith("e")) {
-    result = result * problem.libraries[id].shipCapacity;
-  }
+  result = result * problem.libraries[id].shipCapacity;
   assert(
     Number.isFinite(bookScoreBySignupDuration),
     `'${bookScoreBySignupDuration}' is not finite`
