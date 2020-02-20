@@ -53,6 +53,10 @@ function solve(problem, file) {
       };
     })
     .filter(library => library.books.length > 0);
+  // result.forEach(lib => {
+  //   const z = problem.libraries[lib.index].shipCapacity;
+  //   if (z < 2) console.log("NOT OPTI");
+  // });
   return result;
 }
 
